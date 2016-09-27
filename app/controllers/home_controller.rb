@@ -9,5 +9,7 @@ class HomeController < ApplicationController
     end
 
     @latest_event = raw_events.first
+
+    @icon_color = @latest_event.current_color
   end
 end

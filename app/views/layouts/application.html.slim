@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title GuavaDeploy
+    title ="[#{@latest_event.current_state}] Level 3 Bathroom"
     /! Material Design fonts
     = stylesheet_link_tag "//fonts.googleapis.com/css?family=Roboto:300,400,500,700"
     = stylesheet_link_tag "//fonts.googleapis.com/icon?family=Material+Icons"
@@ -13,6 +13,8 @@ html
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+    = favicon_link_tag "/#{@icon_color}_square.ico"
 
   body
     .container
