@@ -25,4 +25,4 @@ test:
 
 production:
   <<: *default
-  database: guava_deploy_dev
+  database: guava_deploy_prod
