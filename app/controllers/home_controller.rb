@@ -8,5 +8,7 @@ class HomeController < ApplicationController
         true
       end
     end
+
+    @last_event = DoorEvent.last
   end
 end
