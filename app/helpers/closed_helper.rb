@@ -1,0 +1,2 @@
+module ClosedHelper
+end
