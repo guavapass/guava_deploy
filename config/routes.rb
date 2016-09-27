@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'home/index'
+
   namespace :door_event do
     resources :opened, only: [:create]
     resources :closed, only: [:create]

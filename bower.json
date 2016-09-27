@@ -1,0 +1,21 @@
+{
+  "name": "guava-deploy",
+  "homepage": "http://toilet.guavawesome.com",
+  "authors": [],
+  "dependencies": {
+    "bootstrap-material-design": "^4.0.2"
+  },
+  "description": "GuavaDeploy Toilet Website",
+  "keywords": [
+    "GuavaDeploy"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/bower_components",
+    "test",
+    "tests"
+  ]
+}
