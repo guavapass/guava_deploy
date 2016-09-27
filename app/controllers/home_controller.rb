@@ -1,12 +1,9 @@
 class HomeController < ApplicationController
   def index
-    prev_event = nil
+    @events = []
 
-    @events = DoorEvent.order(created_at: :desc).limit(100).select do |event|
-      if prev_event&.action != event.action
-        prev_event = event
-        true
-      end
+    DoorEvent.order(created_at: :desc).limit(100).each_cons(2) do |event, next_event|
+      @events << event if event.action != next_event&.action
     end
 
     @last_event = DoorEvent.last
