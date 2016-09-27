@@ -11,7 +11,7 @@
           h4
             small Current Status
           h4
-            #current-state
+            #current-state.alert[class="alert-#{@latest_event.current_alert}"]
               = @latest_event.current_state
 
     .col-sm-6

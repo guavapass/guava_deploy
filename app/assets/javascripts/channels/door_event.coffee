@@ -8,5 +8,7 @@ App.door_event = App.cable.subscriptions.create "DoorEventChannel",
   received: (data) ->
     $('title').html("[#{data.state}] Level 3 Bathroom")
     $('#current-state').html(data.state)
+    $('#current-state').removeClass('alert-success alert-danger')
+    $('#current-state').addClass("alert-#{data.alert_state}")
     $('link[rel="shortcut icon"]').attr('href', "/#{data.color}_square.ico")
     # Called when there's incoming data on the websocket for this channel

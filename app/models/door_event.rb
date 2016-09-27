@@ -8,8 +8,13 @@ class DoorEvent < ApplicationRecord
     ActionCable.server.broadcast(
       "DoorEventChannel",
       state: current_state,
-      color: current_color
+      color: current_color,
+      alert_state: current_alert,
     )
+  end
+
+  def current_alert
+    opened? ? 'success' : 'danger'
   end
 
   def current_state
