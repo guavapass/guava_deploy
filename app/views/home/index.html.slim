@@ -1,7 +1,16 @@
-.row
-  .col-span-12
-    h1 Door
-    table.table
-      - @events.each do |event|
-        tr
-          td = event.id
+.page-header
+  .row
+    .col-sm-6
+      h1
+        | Level 3 Bathroom
+      h1
+        small 6 Jiak Chuan
+
+    .col-sm-6
+      .well
+        table.table
+          - @events.each do |event|
+            tr
+              td = event.id
+              td = event.action
+              td = event.created_at.strftime('%l:%m:%S %P, %Z %b %d')
