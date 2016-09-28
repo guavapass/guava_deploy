@@ -20,7 +20,5 @@ class HomeController < ApplicationController
     ).group_by do |event|
       event.created_at.strftime('%l %P')
     end
-
-    @yesterday.each{|k, v| ap k; ap v.count}
   end
 end
