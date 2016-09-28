@@ -27,7 +27,7 @@
             return Math.round(Math.random() * 255);
         };
 
-        var chartData = {
+        var barChartData = {
             labels: ["January", "February", "March", "April", "May", "June", "July"],
             datasets: [{
                 type: 'bar',
@@ -53,9 +53,9 @@
         };
         window.onload = function() {
             var ctx = document.getElementById("canvas").getContext("2d");
-            window.myMixedChart = new Chart(ctx, {
+            window.myBar = new Chart(ctx, {
                 type: 'bar',
-                data: chartData,
+                data: barChartData,
                 options: {
                     responsive: true,
                     title: {
@@ -67,12 +67,12 @@
         };
 
         $('#randomizeData').click(function() {
-            $.each(chartData.datasets, function(i, dataset) {
+            $.each(barChartData.datasets, function(i, dataset) {
                 dataset.backgroundColor = 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',.7)';
                 dataset.data = [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()];
 
             });
-            window.myMixedChart.update();
+            window.myBar.update();
         });
     </script>
 </body>

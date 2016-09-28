@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
 module.exports = function(Chart) {
 
 	var helpers = Chart.helpers;
-	// Create a dictionary of chart types, to allow for extension of existing types
+	//Create a dictionary of chart types, to allow for extension of existing types
 	Chart.types = {};
 
-	// Store a reference to each instance - allowing us to globally resize chart instances on window resize.
-	// Destroy method on the chart will remove the instance of the chart from this reference.
+	//Store a reference to each instance - allowing us to globally resize chart instances on window resize.
+	//Destroy method on the chart will remove the instance of the chart from this reference.
 	Chart.instances = {};
 
 	// Controllers available for dataset visualization eg. bar, line, slice, etc.
@@ -30,7 +30,7 @@ module.exports = function(Chart) {
 			}
 		});
 
-		// Add the chart instance to the global namespace
+		//Add the chart instance to the global namespace
 		Chart.instances[this.id] = this;
 
 		if (this.options.responsive) {
@@ -45,7 +45,7 @@ module.exports = function(Chart) {
 
 	helpers.extend(Chart.Controller.prototype, /** @lends Chart.Controller */ {
 
-		initialize: function() {
+		initialize: function initialize() {
 			var me = this;
 			// Before init plugin notification
 			Chart.plugins.notify('beforeInit', [me]);
@@ -68,18 +68,18 @@ module.exports = function(Chart) {
 			return me;
 		},
 
-		clear: function() {
+		clear: function clear() {
 			helpers.clear(this.chart);
 			return this;
 		},
 
-		stop: function() {
+		stop: function stop() {
 			// Stops any current animation loop occuring
 			Chart.animationService.cancelAnimation(this);
 			return this;
 		},
 
-		resize: function(silent) {
+		resize: function resize(silent) {
 			var me = this;
 			var chart = me.chart;
 			var canvas = chart.canvas;
@@ -99,7 +99,7 @@ module.exports = function(Chart) {
 			helpers.retinaScale(chart);
 
 			// Notify any plugins about the resize
-			var newSize = {width: newWidth, height: newHeight};
+			var newSize = { width: newWidth, height: newHeight };
 			Chart.plugins.notify('resize', [me, newSize]);
 
 			// Notify of resize
@@ -115,7 +115,7 @@ module.exports = function(Chart) {
 			return me;
 		},
 
-		ensureScalesHaveIDs: function() {
+		ensureScalesHaveIDs: function ensureScalesHaveIDs() {
 			var options = this.options;
 			var scalesOptions = options.scales || {};
 			var scaleOptions = options.scale;
@@ -136,7 +136,7 @@ module.exports = function(Chart) {
 		/**
 		 * Builds a map of scale ID to scale object for future lookup.
 		 */
-		buildScales: function() {
+		buildScales: function buildScales() {
 			var me = this;
 			var options = me.options;
 			var scales = me.scales = {};
@@ -145,19 +145,16 @@ module.exports = function(Chart) {
 			if (options.scales) {
 				items = items.concat(
 					(options.scales.xAxes || []).map(function(xAxisOptions) {
-						return {options: xAxisOptions, dtype: 'category'};
-					}),
+						return { options: xAxisOptions, dtype: 'category' }; }),
 					(options.scales.yAxes || []).map(function(yAxisOptions) {
-						return {options: yAxisOptions, dtype: 'linear'};
-					})
-				);
+						return { options: yAxisOptions, dtype: 'linear' }; }));
 			}
 
 			if (options.scale) {
-				items.push({options: options.scale, dtype: 'radialLinear', isDefault: true});
+				items.push({ options: options.scale, dtype: 'radialLinear', isDefault: true });
 			}
 
-			helpers.each(items, function(item) {
+			helpers.each(items, function(item, index) {
 				var scaleOptions = item.options;
 				var scaleType = helpers.getValueOrDefault(scaleOptions.type, item.dtype);
 				var scaleClass = Chart.scaleService.getScaleConstructor(scaleType);
@@ -189,7 +186,7 @@ module.exports = function(Chart) {
 			Chart.layoutService.update(this, this.chart.width, this.chart.height);
 		},
 
-		buildOrUpdateControllers: function() {
+		buildOrUpdateControllers: function buildOrUpdateControllers() {
 			var me = this;
 			var types = [];
 			var newControllers = [];
@@ -222,14 +219,14 @@ module.exports = function(Chart) {
 			return newControllers;
 		},
 
-		resetElements: function() {
+		resetElements: function resetElements() {
 			var me = this;
 			helpers.each(me.data.datasets, function(dataset, datasetIndex) {
 				me.getDatasetMeta(datasetIndex).controller.reset();
 			}, me);
 		},
 
-		update: function(animationDuration, lazy) {
+		update: function update(animationDuration, lazy) {
 			var me = this;
 			Chart.plugins.notify('beforeUpdate', [me]);
 
@@ -294,23 +291,23 @@ module.exports = function(Chart) {
 			var me = this;
 			var i, ilen;
 
-			if (Chart.plugins.notify('beforeDatasetsUpdate', [me])) {
+			if (Chart.plugins.notify('beforeDatasetsUpdate', [ me ])) {
 				for (i = 0, ilen = me.data.datasets.length; i < ilen; ++i) {
 					me.getDatasetMeta(i).controller.update();
 				}
 
-				Chart.plugins.notify('afterDatasetsUpdate', [me]);
+				Chart.plugins.notify('afterDatasetsUpdate', [ me ]);
 			}
 		},
 
-		render: function(duration, lazy) {
+		render: function render(duration, lazy) {
 			var me = this;
 			Chart.plugins.notify('beforeRender', [me]);
 
 			var animationOptions = me.options.animation;
 			if (animationOptions && ((typeof duration !== 'undefined' && duration !== 0) || (typeof duration === 'undefined' && animationOptions.duration !== 0))) {
 				var animation = new Chart.Animation();
-				animation.numSteps = (duration || animationOptions.duration) / 16.66; // 60 fps
+				animation.numSteps = (duration || animationOptions.duration) / 16.66; //60 fps
 				animation.easing = animationOptions.easing;
 
 				// render function
@@ -378,7 +375,7 @@ module.exports = function(Chart) {
 			helpers.each(me.data.datasets, function(dataset, datasetIndex) {
 				if (me.isDatasetVisible(datasetIndex)) {
 					var meta = me.getDatasetMeta(datasetIndex);
-					helpers.each(meta.data, function(element) {
+					helpers.each(meta.data, function(element, index) {
 						if (element.inRange(eventPosition.x, eventPosition.y)) {
 							elementsArray.push(element);
 							return elementsArray;
@@ -387,7 +384,7 @@ module.exports = function(Chart) {
 				}
 			});
 
-			return elementsArray.slice(0, 1);
+			return elementsArray;
 		},
 
 		getElementsAtEvent: function(e) {
@@ -395,7 +392,7 @@ module.exports = function(Chart) {
 			var eventPosition = helpers.getRelativePosition(e, me.chart);
 			var elementsArray = [];
 
-			var found = function() {
+			var found = (function() {
 				if (me.data.datasets) {
 					for (var i = 0; i < me.data.datasets.length; i++) {
 						var meta = me.getDatasetMeta(i);
@@ -408,44 +405,7 @@ module.exports = function(Chart) {
 						}
 					}
 				}
-			}.call(me);
-
-			if (!found) {
-				return elementsArray;
-			}
-
-			helpers.each(me.data.datasets, function(dataset, datasetIndex) {
-				if (me.isDatasetVisible(datasetIndex)) {
-					var meta = me.getDatasetMeta(datasetIndex),
-						element = meta.data[found._index];
-					if (element && !element._view.skip) {
-						elementsArray.push(element);
-					}
-				}
-			}, me);
-
-			return elementsArray;
-		},
-
-		getElementsAtXAxis: function(e) {
-			var me = this;
-			var eventPosition = helpers.getRelativePosition(e, me.chart);
-			var elementsArray = [];
-
-			var found = function() {
-				if (me.data.datasets) {
-					for (var i = 0; i < me.data.datasets.length; i++) {
-						var meta = me.getDatasetMeta(i);
-						if (me.isDatasetVisible(i)) {
-							for (var j = 0; j < meta.data.length; j++) {
-								if (meta.data[j].inLabelRange(eventPosition.x, eventPosition.y)) {
-									return meta.data[j];
-								}
-							}
-						}
-					}
-				}
-			}.call(me);
+			}).call(me);
 
 			if (!found) {
 				return elementsArray;
@@ -454,12 +414,7 @@ module.exports = function(Chart) {
 			helpers.each(me.data.datasets, function(dataset, datasetIndex) {
 				if (me.isDatasetVisible(datasetIndex)) {
 					var meta = me.getDatasetMeta(datasetIndex);
-					var index = helpers.findIndex(meta.data, function(it) {
-						return found._model.x === it._model.x;
-					});
-					if (index !== -1 && !meta.data[index]._view.skip) {
-						elementsArray.push(meta.data[index]);
-					}
+					elementsArray.push(meta.data[found._index]);
 				}
 			}, me);
 
@@ -475,8 +430,6 @@ module.exports = function(Chart) {
 				return me.getElementsAtEvent(e);
 			case 'dataset':
 				return me.getDatasetAtEvent(e);
-			case 'x-axis':
-				return me.getElementsAtXAxis(e);
 			default:
 				return e;
 			}
@@ -502,14 +455,14 @@ module.exports = function(Chart) {
 			var meta = dataset._meta[me.id];
 			if (!meta) {
 				meta = dataset._meta[me.id] = {
-					type: null,
-					data: [],
-					dataset: null,
-					controller: null,
-					hidden: null,			// See isDatasetVisible() comment
-					xAxisID: null,
-					yAxisID: null
-				};
+				type: null,
+				data: [],
+				dataset: null,
+				controller: null,
+				hidden: null,			// See isDatasetVisible() comment
+				xAxisID: null,
+				yAxisID: null
+			};
 			}
 
 			return meta;
@@ -518,7 +471,7 @@ module.exports = function(Chart) {
 		getVisibleDatasetCount: function() {
 			var count = 0;
 			for (var i = 0, ilen = this.data.datasets.length; i<ilen; ++i) {
-				if (this.isDatasetVisible(i)) {
+				 if (this.isDatasetVisible(i)) {
 					count++;
 				}
 			}
@@ -533,11 +486,11 @@ module.exports = function(Chart) {
 			return typeof meta.hidden === 'boolean'? !meta.hidden : !this.data.datasets[datasetIndex].hidden;
 		},
 
-		generateLegend: function() {
+		generateLegend: function generateLegend() {
 			return this.options.legendCallback(this);
 		},
 
-		destroy: function() {
+		destroy: function destroy() {
 			var me = this;
 			me.stop();
 			me.clear();
@@ -563,11 +516,11 @@ module.exports = function(Chart) {
 			delete Chart.instances[me.id];
 		},
 
-		toBase64Image: function() {
+		toBase64Image: function toBase64Image() {
 			return this.chart.canvas.toDataURL.apply(this.chart.canvas, arguments);
 		},
 
-		initToolTip: function() {
+		initToolTip: function initToolTip() {
 			var me = this;
 			me.tooltip = new Chart.Tooltip({
 				_chart: me.chart,
@@ -577,7 +530,7 @@ module.exports = function(Chart) {
 			}, me);
 		},
 
-		bindEvents: function() {
+		bindEvents: function bindEvents() {
 			var me = this;
 			helpers.bindEvents(me, me.options.events, function(evt) {
 				me.eventHandler(evt);
@@ -590,11 +543,10 @@ module.exports = function(Chart) {
 
 			switch (mode) {
 			case 'single':
-				elements = [elements[0]];
+				elements = [ elements[0] ];
 				break;
 			case 'label':
 			case 'dataset':
-			case 'x-axis':
 				// elements = elements;
 				break;
 			default:
@@ -610,7 +562,7 @@ module.exports = function(Chart) {
 			}
 		},
 
-		eventHandler: function(e) {
+		eventHandler: function eventHandler(e) {
 			var me = this;
 			var tooltip = me.tooltip;
 			var options = me.options || {};
@@ -626,7 +578,7 @@ module.exports = function(Chart) {
 				me.tooltipActive = [];
 			} else {
 				me.active = me.getElementsAtEventForMode(e, hoverOptions.mode);
-				me.tooltipActive = me.getElementsAtEventForMode(e, tooltipsOptions.mode);
+				me.tooltipActive =  me.getElementsAtEventForMode(e, tooltipsOptions.mode);
 			}
 
 			// On Hover hook
@@ -634,13 +586,12 @@ module.exports = function(Chart) {
 				hoverOptions.onHover.call(me, me.active);
 			}
 
-			if (me.legend && me.legend.handleEvent) {
-				me.legend.handleEvent(e);
-			}
-
 			if (e.type === 'mouseup' || e.type === 'click') {
 				if (options.onClick) {
 					options.onClick.call(me, e, me.active);
+				}
+				if (me.legend && me.legend.handleEvent) {
+					me.legend.handleEvent(e);
 				}
 			}
 

@@ -21,7 +21,7 @@ new Chart(ctx, {
 });
 ```
 
-### Dataset Structure
+### Data Structure
 
 The following options can be included in a polar area chart dataset to configure options for that specific dataset.
 
@@ -29,9 +29,9 @@ Some properties are specified as arrays. The first value applies to the first ba
 
 Property | Type | Usage
 --- | --- | ---
-data | `Array<Number>` | The data to plot as arcs
+data | `Array<Number>` | The data to plot as bars
 label | `String` | The label for the dataset which appears in the legend and tooltips
-backgroundColor | `Array<Color>` | The fill color of the arcs. See [Colors](#chart-configuration-colors)
+backgroundColor | `Array<Color>` | The fill color of the arcs. See [Colors](#getting-started-colors)
 borderColor | `Array<Color>` | Arc border color
 borderWidth | `Array<Number>` | Border width of arcs in pixels
 hoverBackgroundColor | `Array<Color>` | Arc background color when hovered
@@ -76,7 +76,6 @@ These are the customisation options specific to Polar Area charts. These options
 
 Name | Type | Default | Description
 --- | --- | --- | ---
-startAngle | Number | -0.5 * Math.PI | Sets the starting angle for the first item in a dataset
 scale | Object | [See Scales](#scales) and [Defaults for Radial Linear Scale](#scales-radial-linear-scale) | Options for the one scale used on the chart. Use this to style the ticks, labels, and grid.
 *scale*.type | String |"radialLinear" | As defined in ["Radial Linear"](#scales-radial-linear-scale).
 *scale*.lineArc | Boolean | true | When true, lines are circular.

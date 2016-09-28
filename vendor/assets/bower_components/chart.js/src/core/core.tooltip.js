@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = function(Chart) {
 
@@ -8,24 +8,24 @@ module.exports = function(Chart) {
 		enabled: true,
 		custom: null,
 		mode: 'single',
-		backgroundColor: 'rgba(0,0,0,0.8)',
-		titleFontStyle: 'bold',
+		backgroundColor: "rgba(0,0,0,0.8)",
+		titleFontStyle: "bold",
 		titleSpacing: 2,
 		titleMarginBottom: 6,
-		titleFontColor: '#fff',
-		titleAlign: 'left',
+		titleFontColor: "#fff",
+		titleAlign: "left",
 		bodySpacing: 2,
-		bodyFontColor: '#fff',
-		bodyAlign: 'left',
-		footerFontStyle: 'bold',
+		bodyFontColor: "#fff",
+		bodyAlign: "left",
+		footerFontStyle: "bold",
 		footerSpacing: 2,
 		footerMarginTop: 6,
-		footerFontColor: '#fff',
-		footerAlign: 'left',
+		footerFontColor: "#fff",
+		footerAlign: "left",
 		yPadding: 6,
 		xPadding: 6,
-		yAlign: 'center',
-		xAlign: 'center',
+		yAlign : 'center',
+		xAlign : 'center',
 		caretSize: 5,
 		cornerRadius: 6,
 		multiKeyBackground: '#fff',
@@ -86,7 +86,7 @@ module.exports = function(Chart) {
 	function pushOrConcat(base, toPush) {
 		if (toPush) {
 			if (helpers.isArray(toPush)) {
-				// base = base.concat(toPush);
+				//base = base.concat(toPush);
 				Array.prototype.push.apply(base, toPush);
 			} else {
 				base.push(toPush);
@@ -107,7 +107,7 @@ module.exports = function(Chart) {
 
 		for (i = 0, len = elements.length; i < len; ++i) {
 			var el = elements[i];
-			if (el && el.hasValue()) {
+			if (el && el.hasValue()){
 				var pos = el.tooltipPosition();
 				xPositions.push(pos.x);
 				yPositions.push(pos.y);
@@ -116,11 +116,9 @@ module.exports = function(Chart) {
 
 		var x = 0,
 			y = 0;
-		for (i = 0; i < xPositions.length; ++i) {
-			if (xPositions[i]) {
-				x += xPositions[i];
-				y += yPositions[i];
-			}
+		for (i = 0, len - xPositions.length; i < len; ++i) {
+			x += xPositions[i];
+			y += yPositions[i];
 		}
 
 		return {
@@ -158,8 +156,8 @@ module.exports = function(Chart) {
 					// Positioning
 					xPadding: tooltipOpts.xPadding,
 					yPadding: tooltipOpts.yPadding,
-					xAlign: tooltipOpts.xAlign,
-					yAlign: tooltipOpts.yAlign,
+					xAlign : tooltipOpts.yAlign,
+					yAlign : tooltipOpts.xAlign,
 
 					// Body
 					bodyFontColor: tooltipOpts.bodyFontColor,
@@ -292,9 +290,7 @@ module.exports = function(Chart) {
 
 				// If the user provided a sorting function, use it to modify the tooltip items
 				if (opts.itemSort) {
-					tooltipItems = tooltipItems.sort(function(a, b) {
-						return opts.itemSort(a, b, data);
-					});
+					tooltipItems = tooltipItems.sort(opts.itemSort);
 				}
 
 				// If there is more than one item, show color items
@@ -332,7 +328,7 @@ module.exports = function(Chart) {
 
 			return me;
 		},
-		getTooltipSize: function(vm) {
+		getTooltipSize: function getTooltipSize(vm) {
 			var ctx = this._chart.ctx;
 
 			var size = {
@@ -395,7 +391,7 @@ module.exports = function(Chart) {
 
 			return size;
 		},
-		determineAlignment: function(size) {
+		determineAlignment: function determineAlignment(size) {
 			var me = this;
 			var model = me._model;
 			var chart = me._chart;
@@ -457,7 +453,7 @@ module.exports = function(Chart) {
 				}
 			}
 		},
-		getBackgroundPoint: function(vm, size) {
+		getBackgroundPoint: function getBackgroundPoint(vm, size) {
 			// Background Position
 			var pt = {
 				x: vm.x,
@@ -492,15 +488,17 @@ module.exports = function(Chart) {
 				} else if (xAlign === 'right') {
 					pt.x -= paddingAndSize;
 				}
-			} else if (xAlign === 'left') {
-				pt.x -= radiusAndPadding;
-			} else if (xAlign === 'right') {
-				pt.x += radiusAndPadding;
+			} else {
+				if (xAlign === 'left') {
+					pt.x -= radiusAndPadding;
+				} else if (xAlign === 'right') {
+					pt.x += radiusAndPadding;
+				}
 			}
 
 			return pt;
 		},
-		drawCaret: function(tooltipPoint, size, opacity) {
+		drawCaret: function drawCaret(tooltipPoint, size, opacity, caretPadding) {
 			var vm = this._view;
 			var ctx = this._chart.ctx;
 			var x1, x2, x3;
@@ -564,12 +562,12 @@ module.exports = function(Chart) {
 			ctx.closePath();
 			ctx.fill();
 		},
-		drawTitle: function(pt, vm, ctx, opacity) {
+		drawTitle: function drawTitle(pt, vm, ctx, opacity) {
 			var title = vm.title;
 
 			if (title.length) {
 				ctx.textAlign = vm._titleAlign;
-				ctx.textBaseline = 'top';
+				ctx.textBaseline = "top";
 
 				var titleFontSize = vm.titleFontSize,
 					titleSpacing = vm.titleSpacing;
@@ -589,13 +587,13 @@ module.exports = function(Chart) {
 				}
 			}
 		},
-		drawBody: function(pt, vm, ctx, opacity) {
+		drawBody: function drawBody(pt, vm, ctx, opacity) {
 			var bodyFontSize = vm.bodyFontSize;
 			var bodySpacing = vm.bodySpacing;
 			var body = vm.body;
 
 			ctx.textAlign = vm._bodyAlign;
-			ctx.textBaseline = 'top';
+			ctx.textBaseline = "top";
 
 			var bodyFontColor = helpers.color(vm.bodyFontColor);
 			var textColor = bodyFontColor.alpha(opacity * bodyFontColor.alpha()).rgbString();
@@ -650,14 +648,14 @@ module.exports = function(Chart) {
 			helpers.each(vm.afterBody, fillLineOfText);
 			pt.y -= bodySpacing; // Remove last body spacing
 		},
-		drawFooter: function(pt, vm, ctx, opacity) {
+		drawFooter: function drawFooter(pt, vm, ctx, opacity) {
 			var footer = vm.footer;
 
 			if (footer.length) {
 				pt.y += vm.footerMarginTop;
 
 				ctx.textAlign = vm._footerAlign;
-				ctx.textBaseline = 'top';
+				ctx.textBaseline = "top";
 
 				var footerFontColor = helpers.color(vm.footerFontColor);
 				ctx.fillStyle = footerFontColor.alpha(opacity * footerFontColor.alpha()).rgbString();
@@ -669,7 +667,7 @@ module.exports = function(Chart) {
 				});
 			}
 		},
-		draw: function() {
+		draw: function draw() {
 			var ctx = this._chart.ctx;
 			var vm = this._view;
 
@@ -694,7 +692,7 @@ module.exports = function(Chart) {
 				ctx.fill();
 
 				// Draw Caret
-				this.drawCaret(pt, tooltipSize, opacity);
+				this.drawCaret(pt, tooltipSize, opacity, vm.caretPadding);
 
 				// Draw Title, Body, and Footer
 				pt.x += vm.xPadding;

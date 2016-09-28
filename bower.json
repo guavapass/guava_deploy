@@ -4,7 +4,8 @@
   "authors": [],
   "dependencies": {
     "bootstrap-material-design": "^4.0.2",
-    "chart.js": "^2.3.0"
+    "chart.js": "^2.3.0",
+    "Chart.js": "chartjs#2.1.6"
   },
   "description": "GuavaDeploy Toilet Website",
   "keywords": [

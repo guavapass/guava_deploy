@@ -1,5 +1,14 @@
 // Test the rectangle element
 describe('Legend block tests', function() {
+
+	beforeEach(function() {
+		window.addDefaultMatchers(jasmine);
+	});
+
+	afterEach(function() {
+		window.releaseAllCharts();
+	});
+
 	it('Should be constructed', function() {
 		var legend = new Chart.Legend({});
 		expect(legend).not.toBe(undefined);
@@ -14,7 +23,6 @@ describe('Legend block tests', function() {
 
 			// a callback that will handle
 			onClick: jasmine.any(Function),
-			onHover: null,
 
 			labels: {
 				boxWidth: 40,
@@ -44,7 +52,6 @@ describe('Legend block tests', function() {
 					label: 'dataset3',
 					borderWidth: 10,
 					borderColor: 'green',
-					pointStyle: 'crossRot',
 					data: []
 				}],
 				labels: []
@@ -61,7 +68,6 @@ describe('Legend block tests', function() {
 			lineJoin: undefined,
 			lineWidth: undefined,
 			strokeStyle: undefined,
-			pointStyle: undefined,
 			datasetIndex: 0
 		}, {
 			text: 'dataset2',
@@ -73,7 +79,6 @@ describe('Legend block tests', function() {
 			lineJoin: 'miter',
 			lineWidth: undefined,
 			strokeStyle: undefined,
-			pointStyle: undefined,
 			datasetIndex: 1
 		}, {
 			text: 'dataset3',
@@ -85,7 +90,6 @@ describe('Legend block tests', function() {
 			lineJoin: undefined,
 			lineWidth: 10,
 			strokeStyle: 'green',
-			pointStyle: 'crossRot',
 			datasetIndex: 2
 		}]);
 	});

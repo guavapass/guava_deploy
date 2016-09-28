@@ -4,7 +4,6 @@
 var Chart = require('./core/core.js')();
 
 require('./core/core.helpers')(Chart);
-require('./core/core.canvasHelpers')(Chart);
 require('./core/core.element')(Chart);
 require('./core/core.animation')(Chart);
 require('./core/core.controller')(Chart);

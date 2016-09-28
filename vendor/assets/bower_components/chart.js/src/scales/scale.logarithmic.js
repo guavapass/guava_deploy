@@ -1,23 +1,22 @@
-'use strict';
+"use strict";
 
 module.exports = function(Chart) {
 
 	var helpers = Chart.helpers;
 
 	var defaultConfig = {
-		position: 'left',
+		position: "left",
 
 		// label settings
 		ticks: {
 			callback: function(value, index, arr) {
 				var remain = value / (Math.pow(10, Math.floor(helpers.log10(value))));
 
-				if (value === 0) {
-					return '0';
-				} else if (remain === 1 || remain === 2 || remain === 5 || index === 0 || index === arr.length - 1) {
+				if (remain === 1 || remain === 2 || remain === 5 || index === 0 || index === arr.length - 1) {
 					return value.toExponential();
+				} else {
+					return '';
 				}
-				return '';
 			}
 		}
 	};
@@ -39,7 +38,6 @@ module.exports = function(Chart) {
 			// Calculate Range
 			me.min = null;
 			me.max = null;
-			me.minNotZero = null;
 
 			if (opts.stacked) {
 				var valuesPerType = {};
@@ -98,10 +96,6 @@ module.exports = function(Chart) {
 							} else if (value > me.max) {
 								me.max = value;
 							}
-
-							if (value !== 0 && (me.minNotZero === null || value < me.minNotZero)) {
-								me.minNotZero = value;
-							}
 						});
 					}
 				});
@@ -140,16 +134,8 @@ module.exports = function(Chart) {
 			while (tickVal < me.max) {
 				ticks.push(tickVal);
 
-				var exp;
-				var significand;
-
-				if (tickVal === 0) {
-					exp = Math.floor(helpers.log10(me.minNotZero));
-					significand = Math.round(me.minNotZero / Math.pow(10, exp));
-				} else {
-					exp = Math.floor(helpers.log10(tickVal));
-					significand = Math.floor(tickVal / Math.pow(10, exp)) + 1;
-				}
+				var exp = Math.floor(helpers.log10(tickVal));
+				var significand = Math.floor(tickVal / Math.pow(10, exp)) + 1;
 
 				if (significand === 10) {
 					significand = 1;
@@ -191,25 +177,23 @@ module.exports = function(Chart) {
 		getLabelForIndex: function(index, datasetIndex) {
 			return +this.getRightValue(this.chart.data.datasets[datasetIndex].data[index]);
 		},
-		getPixelForTick: function(index) {
-			return this.getPixelForValue(this.tickValues[index]);
+		getPixelForTick: function(index, includeOffset) {
+			return this.getPixelForValue(this.tickValues[index], null, null, includeOffset);
 		},
-		getPixelForValue: function(value) {
+		getPixelForValue: function(value, index, datasetIndex, includeOffset) {
 			var me = this;
 			var innerDimension;
 			var pixel;
 
 			var start = me.start;
 			var newVal = +me.getRightValue(value);
-			var range;
+			var range = helpers.log10(me.end) - helpers.log10(start);
 			var paddingTop = me.paddingTop;
 			var paddingBottom = me.paddingBottom;
 			var paddingLeft = me.paddingLeft;
-			var opts = me.options;
-			var tickOpts = opts.ticks;
 
 			if (me.isHorizontal()) {
-				range = helpers.log10(me.end) - helpers.log10(start); // todo: if start === 0
+
 				if (newVal === 0) {
 					pixel = me.left + paddingLeft;
 				} else {
@@ -219,48 +203,34 @@ module.exports = function(Chart) {
 				}
 			} else {
 				// Bottom - top since pixels increase downard on a screen
-				innerDimension = me.height - (paddingTop + paddingBottom);
-				if (start === 0 && !tickOpts.reverse) {
-					range = helpers.log10(me.end) - helpers.log10(me.minNotZero);
-					if (newVal === start) {
-						pixel = me.bottom - paddingBottom;
-					} else if (newVal === me.minNotZero) {
-						pixel = me.bottom - paddingBottom - innerDimension * 0.02;
-					} else {
-						pixel = me.bottom - paddingBottom - innerDimension * 0.02 - (innerDimension * 0.98/ range * (helpers.log10(newVal)-helpers.log10(me.minNotZero)));
-					}
-				} else if (me.end === 0 && tickOpts.reverse) {
-					range = helpers.log10(me.start) - helpers.log10(me.minNotZero);
-					if (newVal === me.end) {
-						pixel = me.top + paddingTop;
-					} else if (newVal === me.minNotZero) {
-						pixel = me.top + paddingTop + innerDimension * 0.02;
-					} else {
-						pixel = me.top + paddingTop + innerDimension * 0.02 + (innerDimension * 0.98/ range * (helpers.log10(newVal)-helpers.log10(me.minNotZero)));
-					}
+				if (newVal === 0) {
+					pixel = me.top + paddingTop;
 				} else {
-					range = helpers.log10(me.end) - helpers.log10(start);
 					innerDimension = me.height - (paddingTop + paddingBottom);
 					pixel = (me.bottom - paddingBottom) - (innerDimension / range * (helpers.log10(newVal) - helpers.log10(start)));
 				}
 			}
+
 			return pixel;
 		},
 		getValueForPixel: function(pixel) {
 			var me = this;
+			var offset;
 			var range = helpers.log10(me.end) - helpers.log10(me.start);
-			var value, innerDimension;
+			var value;
+			var innerDimension;
 
 			if (me.isHorizontal()) {
 				innerDimension = me.width - (me.paddingLeft + me.paddingRight);
 				value = me.start * Math.pow(10, (pixel - me.left - me.paddingLeft) * range / innerDimension);
-			} else {  // todo: if start === 0
+			} else {
 				innerDimension = me.height - (me.paddingTop + me.paddingBottom);
 				value = Math.pow(10, (me.bottom - me.paddingBottom - pixel) * range / innerDimension) / me.start;
 			}
+
 			return value;
 		}
 	});
-	Chart.scaleService.registerScaleType('logarithmic', LogarithmicScale, defaultConfig);
+	Chart.scaleService.registerScaleType("logarithmic", LogarithmicScale, defaultConfig);
 
 };
