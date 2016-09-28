@@ -1,0 +1,7 @@
+tr
+  td = event.id
+  td = event.action
+  td = event.created_at.strftime('%l:%M:%S %P, %Z %b %d')
+  td
+    - if event.opened? && next_event
+      = distance_of_time_in_words(next_event.created_at, event.created_at, include_seconds: true)

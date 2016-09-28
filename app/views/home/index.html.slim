@@ -21,21 +21,13 @@
               | Notify of Next Open
               input#notify-me[type='checkbox']
 
-
-
   .col-sm-6
-    .well
-      table.table
-        thead
-          th ID
-          th Action
-          th Time
-          th Duration
+    table.table
+      thead
+        th ID
+        th Action
+        th Time
+        th Duration
+      tbody#events
         - @events.each_cons(2) do |event, next_event|
-          tr
-            td = event.id
-            td = event.action
-            td = event.created_at.strftime('%l:%M:%S %P, %Z %b %d')
-            td
-              - if event.opened? && next_event
-                = distance_of_time_in_words(next_event.created_at, event.created_at, include_seconds: true)
+          = render partial: 'event_row', locals: { event: event, next_event: next_event }
