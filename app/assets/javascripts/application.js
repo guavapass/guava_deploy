@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-material-design/dist/bootstrap-material-design.iife
 //= require turbolinks
 //= require_tree .

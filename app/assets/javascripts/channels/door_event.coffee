@@ -12,3 +12,12 @@ App.door_event = App.cable.subscriptions.create "DoorEventChannel",
     $('#current-state').addClass("alert-#{data.alert_state}")
     $('link[rel="shortcut icon"]').attr('href', "/#{data.color}_square.ico")
     # Called when there's incoming data on the websocket for this channel
+
+    notify_user(data)
+
+
+notify_user = (data) ->
+  box = $('#notify-me')
+  if box.prop('checked') && data.state == 'open'
+    alert "The bathroom is available! (unchecking the box)"
+    box.prop('checked', false)

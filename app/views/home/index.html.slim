@@ -1,32 +1,41 @@
-.page-header
-  .row
-    .col-sm-6
-      h1
-        | Level 3 Bathroom
-      h1
-        small 6 Jiak Chuan
+.row
+  .col-sm-6
+    h1
+      | Level 3 Bathroom
+    h1
+      small 6 Jiak Chuan
 
-      .row
-        .col-sm-12
-          h4
-            small Current Status
-          h4
-            #current-state.alert[class="alert-#{@latest_event.current_alert}"]
-              = @latest_event.current_state
+    .row
+      .col-sm-12
+        h4
+          small Current Status
+        h4
+          #current-state.alert[class="alert-#{@latest_event.current_alert}"]
+            = @latest_event.current_state
 
-    .col-sm-6
-      .well
-        table.table
-          thead
-            th ID
-            th Action
-            th Time
-            th Duration
-          - @events.each_cons(2) do |event, next_event|
-            tr
-              td = event.id
-              td = event.action
-              td = event.created_at.strftime('%l:%M:%S %P, %Z %b %d')
-              td
-                - if event.opened? && next_event
-                  = distance_of_time_in_words(next_event.created_at, event.created_at, include_seconds: true)
+    .row
+      .col-sm-12
+        .form-group
+          .togglebutton
+            label
+              | Notify of Next Open
+              input#notify-me[type='checkbox']
+
+
+
+  .col-sm-6
+    .well
+      table.table
+        thead
+          th ID
+          th Action
+          th Time
+          th Duration
+        - @events.each_cons(2) do |event, next_event|
+          tr
+            td = event.id
+            td = event.action
+            td = event.created_at.strftime('%l:%M:%S %P, %Z %b %d')
+            td
+              - if event.opened? && next_event
+                = distance_of_time_in_words(next_event.created_at, event.created_at, include_seconds: true)
