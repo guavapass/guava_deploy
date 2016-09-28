@@ -14,6 +14,6 @@
 //= require jquery_ujs
 //= require tether/dist/js/tether.min
 //= require bootstrap-material-design/dist/bootstrap-material-design.iife
-//= require chartjs/dist/Chart.min
+//= require chart.js/dist/Chart.min
 //= require turbolinks
 //= require_tree .
