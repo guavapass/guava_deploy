@@ -3,7 +3,7 @@ App.door_event = App.cable.subscriptions.create "DoorEventChannel",
     # Called when the subscription is ready for use on the server
 
   disconnected: ->
-    alert "disconnected"
+    alert "disconnected - Please Refresh!"
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
