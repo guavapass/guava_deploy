@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require tether/dist/js/tether.min
 //= require bootstrap-material-design/dist/bootstrap-material-design.iife
 //= require turbolinks
 //= require_tree .
