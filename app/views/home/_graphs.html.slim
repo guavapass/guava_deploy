@@ -1,6 +1,8 @@
 javascript:
   var labels = #{@yesterday.keys.to_json.html_safe}
   var data = #{@yesterday.values.map(&:count).to_json.html_safe}
-.row
+
+#stats-area.row
   .col-xs-12
-    canvas#myChart[width="400" height="400"]
+    h2 Yesterday's Stats
+    canvas#myChart[width="400" height="200"]
