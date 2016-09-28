@@ -41,6 +41,7 @@ GEM
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (7.1.2)
+    awesome_print (1.7.0)
     builder (3.2.2)
     byebug (9.0.5)
     capistrano (3.6.1)
@@ -136,7 +137,7 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
-    redis (3.2.2)
+    redis (3.3.1)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -189,6 +190,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   byebug
   capistrano-bower
   capistrano-passenger

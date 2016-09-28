@@ -3,7 +3,8 @@
   "homepage": "http://toilet.guavawesome.com",
   "authors": [],
   "dependencies": {
-    "bootstrap-material-design": "^4.0.2"
+    "bootstrap-material-design": "^4.0.2",
+    "chart.js": "^2.3.0"
   },
   "description": "GuavaDeploy Toilet Website",
   "keywords": [

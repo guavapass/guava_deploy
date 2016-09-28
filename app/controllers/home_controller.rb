@@ -11,5 +11,16 @@ class HomeController < ApplicationController
     @latest_event = raw_events.first
 
     @icon_color = @latest_event.current_color
+
+    yesterday = Time.zone.now - 1.day
+    yesterday_start = yesterday.beginning_of_day
+    yesterday_end = yesterday.end_of_day
+    @yesterday = DoorEvent.where(
+      action: 0, created_at: yesterday_start .. yesterday_end
+    ).group_by do |event|
+      event.created_at.strftime('%l %P')
+    end
+
+    @yesterday.each{|k, v| ap k; ap v.count}
   end
 end
