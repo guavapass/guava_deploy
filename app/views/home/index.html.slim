@@ -10,8 +10,8 @@
         h4
           small Current Status
         h4
-          #current-state.alert[class="alert-#{@latest_event.current_alert}"]
-            = @latest_event.current_state
+          #current-state.alert[class="alert-#{CurrentState.bs_alert}"]
+            = CurrentState.door_state
 
     .row
       .col-sm-12
@@ -31,5 +31,5 @@
         th Time
         th Duration
       tbody#events
-        - @events.each_cons(2) do |event, next_event|
-          = render partial: 'event_row', locals: { event: event, next_event: next_event }
+        - @todays_visits.each do |visit|
+          = render partial: 'event_row', locals: { visit: visit }

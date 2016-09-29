@@ -1,6 +1,6 @@
 javascript:
-  var labels = #{@yesterday_closes_by_hour.keys.to_json.html_safe}
-  var data = #{@yesterday_closes_by_hour.values.map(&:count).to_json.html_safe}
+  var labels = #{@yesterday_visits_by_hour.keys.to_json.html_safe}
+  var data = #{@yesterday_visits_by_hour.values.map(&:count).to_json.html_safe}
 
 #stats-area
   .row
@@ -10,9 +10,9 @@ javascript:
     .col-xs-12
       dl.dl-horizontal
         dt Total Visits
-        dd = @yesterday_closes.count
+        dd = @yesterday_visits.count
         dt Total Time Spent (m)
-        dd = @total_time/60
+        dd
   .row
     .col-xs-12
       canvas#myChart[width="400" height="200"]

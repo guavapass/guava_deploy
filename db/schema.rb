@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915102003) do
+ActiveRecord::Schema.define(version: 20160929004244) do
 
-  create_table "door_events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "door_events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "action",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "visit_id"
     t.index ["action"], name: "index_door_events_on_action", using: :btree
+    t.index ["visit_id"], name: "index_door_events_on_visit_id", using: :btree
+  end
+
+  create_table "visits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["end_at"], name: "index_visits_on_end_at", using: :btree
+    t.index ["start_at"], name: "index_visits_on_start_at", using: :btree
   end
 
 end

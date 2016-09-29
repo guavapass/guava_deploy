@@ -1,49 +1,32 @@
 class HomeController < ApplicationController
   def index
     time_now = Time.zone.now
-    @events = []
 
-    raw_events = DoorEvent.where(created_at: time_now.beginning_of_day .. time_now).order(created_at: :desc)
+    @todays_visits = Visit.where(created_at: time_now.beginning_of_day .. time_now).order(start_at: :desc)
 
-    raw_events.each_cons(2) do |event, next_event|
-      @events << event if event.action != next_event&.action
-    end
+    yesterday = time_now - 1.day
+    @yesterday_visits = Visit.where(created_at: yesterday.beginning_of_day .. yesterday.end_of_day).order(start_at: :desc)
 
-    @latest_event = DoorEvent.last
+    @icon_color = CurrentState.color
 
-    @icon_color = @latest_event.current_color
+    @yesterday_visits_by_hour = visits_by_hour(@yesterday_visits)
 
-    @yesterday_closes = yesterday_closes
-    @yesterday_closes_by_hour = closes_by_hour(@yesterday_closes)
-
-    @total_time = yesterday_total_time(@yesterday_closes)
+    @total_time = yesterday_total_time(@yesterday_visits)
   end
 
   private
 
-  def yesterday_closes
-    yesterday = Time.zone.now - 1.day
-    yesterday_start = yesterday.beginning_of_day
-    yesterday_end = yesterday.end_of_day
-
-    DoorEvent.where(
-      action: 0, created_at: yesterday_start .. yesterday_end
-    )
-  end
-
-  def closes_by_hour(closes)
-    closes.group_by do |event|
-      event.created_at.strftime('%l %P')
+  def visits_by_hour(visits)
+    visits.group_by do |visit|
+      visit.start_at.strftime('%l %P')
     end
   end
 
-  def yesterday_total_time(closes)
-    closes.map do |close|
-      open = DoorEvent.find(close.id + 1)
+  def yesterday_total_time(visits)
+    visits.map do |visit|
+      next unless visit.end_at
 
-      next unless open
-
-      (open.created_at - close.created_at).to_i
-    end.inject(&:+)
+      (visit.start_at - visit.end_at).to_i
+    end.compact.inject(&:+)
   end
 end

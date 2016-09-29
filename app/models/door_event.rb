@@ -2,33 +2,24 @@ class DoorEvent < ApplicationRecord
   CLOSED = 'closed'
   OPENED = 'opened'
 
+  belongs_to :visit
+
   enum action: [CLOSED, OPENED]
 
-  after_commit { push_event }
+  after_commit { process_event }
 
-  def current_alert
-    opened? ? 'success' : 'danger'
+  private
+
+  def process_event
+    previous_event = DoorEvent.find_by(id: self.id - 1)
+
+    return unless preivous_event && (self.action != preivous_event.action)
+
+    if self.closed?
+      Visit.create(start_at: self.created_at)
+    else
+      Visit.last.update(end_at: self.created_at)
+    end
   end
 
-  def current_state
-    opened? ? 'open' : 'closed'
-  end
-
-  def current_color
-    opened? ? 'green' : 'red'
-  end
-
-  def push_event
-    next_event = DoorEvent.find_by(id: self.id - 1)
-
-    return unless next_event && (self.action != next_event.action)
-
-    ActionCable.server.broadcast(
-      "DoorEventChannel",
-      state: current_state,
-      color: current_color,
-      alertState: current_alert,
-      eventRowHtml: ApplicationController.new.render_to_string(partial: 'home/event_row', locals: { event: self, next_event: next_event }).to_s,
-    )
-  end
 end
