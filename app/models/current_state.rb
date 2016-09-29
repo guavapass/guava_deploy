@@ -22,7 +22,6 @@ class CurrentState
         state: door_state,
         color: color,
         alertState: bs_alert,
-        eventRowHtml: ApplicationController.new.render_to_string(partial: 'home/event_row', locals: { visit: Visit.last }).to_s,
       )
     end
   end

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'home/index'
+  resources :visits, only: [:index]
 
   namespace :door_event do
     resources :opened, only: [:create]

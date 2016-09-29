@@ -1,0 +1,13 @@
+.row
+  .col-sm-6
+    h1 Visits
+
+    table.table
+      thead
+        th ID
+        th Start
+        th End
+        th Duration
+      tbody#events
+        = render partial: 'event_row', collection: @visits, as: :visit
+

@@ -17,5 +17,7 @@ html
     = favicon_link_tag "/#{@icon_color}_square.ico"
 
   body
+    = render partial: 'layouts/navbar'
+
     .container-fluid
       = yield

@@ -21,15 +21,5 @@
               | Notify of Next Open
               input#notify-me[type='checkbox']
 
-    = render partial: 'stats'
-
   .col-sm-6
-    table.table
-      thead
-        th ID
-        th Start
-        th End
-        th Duration
-      tbody#events
-        - @todays_visits.each do |visit|
-          = render partial: 'event_row', locals: { visit: visit }
+    = render partial: 'stats'
