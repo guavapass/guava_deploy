@@ -11,8 +11,8 @@ javascript:
       dl.dl-horizontal
         dt Total Visits
         dd = @yesterday_visits.count
-        dt Total Time Spent (m)
-        dd
+        dt Total Time Spent
+        dd = Time.at(@total_time).utc.strftime("%H:%M:%S")
   .row
     .col-xs-12
       canvas#myChart[width="400" height="200"]

@@ -16,14 +16,17 @@ class CreateVisits < ActiveRecord::Migration[5.0]
   def build_visits
     Visit.skip_callback(:commit)
 
-    DoorEvent.order(created_at: :asc).each_cons(2) do |event, next_event|
-      if event.action != next_event&.action
-        if event.closed?
+    DoorEvent.order(created_at: :asc).each do |event|
+      if event.closed?
+        if Visit.first.nil? || Visit.last.end_at
           Visit.create!(start_at: event.created_at)
-        else
+        end
+      else
+        if !Visit.last.end_at.present?
           Visit.last.update(end_at: event.created_at)
         end
       end
     end
+
   end
 end

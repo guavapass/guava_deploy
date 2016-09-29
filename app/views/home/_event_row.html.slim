@@ -1,7 +1,7 @@
 tr
   td = visit.id
-  td = CurrentState.door_state
-  td = (visit.end_at || visit.start_at).strftime('%l:%M:%S %P, %Z %b %d')
+  td = visit.start_at.strftime('%l:%M:%S %P, %b %d')
+  td = visit.end_at.strftime('%l:%M:%S %P, %b %d') if visit.end_at
   td
     - if visit.start_at && visit.end_at
       = distance_of_time_in_words(visit.start_at, visit.end_at, include_seconds: true)
