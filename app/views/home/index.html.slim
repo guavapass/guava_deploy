@@ -22,4 +22,4 @@
               input#notify-me[type='checkbox']
 
   .col-sm-6
-    = render partial: 'stats'
+    = render partial: 'stats', locals: { visits: @last_used_day_visits, visits_by_hour: @last_used_day_visits_by_hour, total_time: @last_used_day_total_time, date: @last_used_at }

@@ -1,18 +1,18 @@
 javascript:
-  var labels = #{@yesterday_visits_by_hour.keys.to_json.html_safe}
-  var data = #{@yesterday_visits_by_hour.values.map(&:count).to_json.html_safe}
+  var labels = #{visits_by_hour.keys.to_json.html_safe}
+  var data = #{visits_by_hour.values.map(&:count).to_json.html_safe}
 
 #stats-area
   .row
     .col-xs-12
-      h2 Yesterday's Stats
+      h2 ="#{date.strftime("%A")}'s, #{date.strftime('%d/%m')}, Stats"
   .row
     .col-xs-12
       dl.dl-horizontal
         dt Total Visits
-        dd = @yesterday_visits.count
+        dd = visits.count
         dt Total Time Spent
-        dd = Time.at(@total_time || 0).utc.strftime("%H:%M:%S")
+        dd = Time.at(total_time).utc.strftime("%H:%M:%S")
   .row
     .col-xs-12
       canvas#myChart[width="400" height="200"]
