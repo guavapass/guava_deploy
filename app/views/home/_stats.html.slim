@@ -11,8 +11,14 @@ javascript:
       dl.dl-horizontal
         dt Total Visits
         dd = visits.count
-        dt Total Time Spent
-        dd = Time.at(total_time).utc.strftime("%H:%M:%S")
+        dt Total Time
+        dd = duration_hms(total_time)
+        dt Average
+        dd = duration_hms(total_time/visits.count)
+        dt Shortest
+        dd = duration_hms(visits.first)
+        dt Longest
+        dd = duration_hms(visits.last)
   .row
     .col-xs-12
       canvas#myChart[width="400" height="200"]
