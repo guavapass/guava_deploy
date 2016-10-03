@@ -1,10 +1,13 @@
 App.door_event = App.cable.subscriptions.create "DoorEventChannel",
-  connected: ->
-    # Called when the subscription is ready for use on the server
+  connected: (data) ->
+    # awesome
 
   disconnected: ->
-    alert "disconnected - Please Refresh!"
+    user_disconnected()
     # Called when the subscription has been terminated by the server
+
+  rejected: ->
+    user_disconnected()
 
   received: (data) ->
     $('title').html("[#{data.state}] Level 3 Bathroom")
@@ -12,6 +15,7 @@ App.door_event = App.cable.subscriptions.create "DoorEventChannel",
     $('#current-state').removeClass('alert-success alert-danger')
     $('#current-state').addClass("alert-#{data.alertState}")
     $('link[rel="shortcut icon"]').attr('href', "/#{data.color}_square.ico")
+    $('#num-connected').html(data.connectedCnt)
 
     # Called when there's incoming data on the websocket for this channel
     notify_user(data)
@@ -22,3 +26,8 @@ notify_user = (data) ->
   if box.prop('checked') && data.state == 'open'
     alert "The bathroom is available! (unchecking the box)"
     box.prop('checked', false)
+
+user_disconnected = ->
+  $('#current-state').html('disconnected - please refresh')
+  $('#current-state').removeClass('alert-success alert-danger')
+  $('#current-state').addClass("alert-disconnected")

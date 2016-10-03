@@ -22,6 +22,7 @@ class CurrentState
         state: door_state,
         color: color,
         alertState: bs_alert,
+        connectedCnt: ActionCable.server.connections.length,
       )
     end
   end
