@@ -15,9 +15,11 @@ class HomeController < ApplicationController
   def set_stats_alltime
     visits = Visit.all.order(start_at: :asc)
 
-    @alltime_visits_by_hour = visits_by_hour(visits)
-    @alltime_total_time = visits_total_time(visits)
-    @alltime_visits = visits_duration_sorted(visits)
+    visits_cleaned = visits_remove_unended(visits)
+
+    @alltime_visits_by_hour = visits_by_hour(visits_cleaned)
+    @alltime_total_time = visits_total_time(visits_cleaned)
+    @alltime_visits = visits_duration_sorted(visits_cleaned)
   end
 
   def set_stats_lastused
@@ -36,10 +38,14 @@ class HomeController < ApplicationController
     @last_used_day_visits = visits_duration_sorted(visits)
   end
 
+  def visits_remove_unended(visits)
+    visits.reject do |visit|
+      visit.end_at.nil?
+    end
+  end
+
   def visits_duration_sorted(visits)
     visits.sort_by do |visit|
-      next unless visit.end_at
-
       (visit.end_at - visit.start_at).to_i
     end
   end
@@ -52,8 +58,6 @@ class HomeController < ApplicationController
 
   def visits_total_time(visits)
     visits.map do |visit|
-      next unless visit.end_at
-
       (visit.end_at - visit.start_at).to_i
     end.compact.inject(&:+)
   end
