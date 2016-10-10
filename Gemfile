@@ -30,6 +30,7 @@ gem 'redis', '~> 3.0'
 gem 'slim-rails'
 
 gem 'pry'
+gem 'pry-nav'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
