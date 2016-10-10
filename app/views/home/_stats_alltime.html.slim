@@ -1,0 +1,24 @@
+javascript:
+  var labelsAllTime = #{visits_by_hour.keys.to_json.html_safe}
+  var dataAllTime = #{visits_by_hour.values.map(&:count).to_json.html_safe}
+
+#stats-area
+  .row
+    .col-xs-12
+      h2 All Time Stats
+  .row
+    .col-xs-12
+      dl.dl-horizontal
+        dt Total Visits
+        dd = visits.count
+        dt Total Time
+        dd = duration_hms(total_time)
+        dt Average
+        dd = duration_hms(total_time/visits.count)
+        dt Shortest
+        dd = duration_hms(visits.first)
+        dt Longest
+        dd = duration_hms(visits.last)
+  .row
+    .col-xs-12
+      canvas#statsAllTime[width="400" height="200"]

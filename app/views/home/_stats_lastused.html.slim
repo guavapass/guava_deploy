@@ -1,11 +1,11 @@
 javascript:
-  var labels = #{visits_by_hour.keys.to_json.html_safe}
-  var data = #{visits_by_hour.values.map(&:count).to_json.html_safe}
+  var labelsLastUsed = #{visits_by_hour.keys.to_json.html_safe}
+  var dataLastUsed = #{visits_by_hour.values.map(&:count).to_json.html_safe}
 
 #stats-area
   .row
     .col-xs-12
-      h2 ="#{date.strftime("%A")}'s, #{date.strftime('%d/%m')}, Stats"
+      h2 ="#{date.strftime("%A")}'s, #{date.strftime('%b %d')}, Stats"
   .row
     .col-xs-12
       dl.dl-horizontal
@@ -21,4 +21,4 @@ javascript:
         dd = duration_hms(visits.last)
   .row
     .col-xs-12
-      canvas#myChart[width="400" height="200"]
+      canvas#statsLastUsed[width="400" height="200"]
