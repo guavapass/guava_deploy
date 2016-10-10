@@ -43,7 +43,6 @@ GEM
     arel (7.1.2)
     awesome_print (1.7.0)
     builder (3.2.2)
-    byebug (9.0.5)
     capistrano (3.6.1)
       airbrussh (>= 1.0.0)
       capistrano-harrow
@@ -199,7 +198,6 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
-  byebug
   capistrano-bower
   capistrano-passenger
   capistrano-rails
