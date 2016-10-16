@@ -27,6 +27,7 @@
           dt Currently Connected
           dd#num-connected ?
   .col-sm-6
+    = render partial: 'chats/selectable_messages'
     = render partial: 'chats/all', locals: { messages: @recent_chat }
 .row
   .col-sm-6

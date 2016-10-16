@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file. Action Cable runs in a loop that does not support auto reloading.
 class ChatAllChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "ChatAll"
+    stream_from "ChatAllChannel"
   end
 
   def unsubscribed
@@ -9,10 +9,14 @@ class ChatAllChannel < ApplicationCable::Channel
 
   end
 
+  def send_message(payload)
+    ChatMessage.create text: payload['text']
+  end
+
   class << self
     def push_message(message)
       ActionCable.server.broadcast(
-        "ChatAll",
+        "ChatAllChannel",
         text: message.text,
         html: ApplicationController.new.render_to_string(
           partial: 'chats/message',
