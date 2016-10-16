@@ -12,11 +12,13 @@
 
 ActiveRecord::Schema.define(version: 20161016034655) do
 
-  create_table "chat_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+  create_table "chat_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.integer  "account_id"
+    t.string   "nickname"
     t.string   "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["nickname"], name: "index_chat_messages_on_nickname", using: :btree
   end
 
   create_table "door_events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|

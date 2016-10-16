@@ -9,8 +9,11 @@ class ChatAllChannel < ApplicationCable::Channel
 
   end
 
-  def send_message(payload)
-    ChatMessage.create text: payload['text']
+  def send_message(data)
+    ChatMessage.create(
+      nickname: data['nickname'],
+      text: data['text']
+    )
   end
 
   class << self

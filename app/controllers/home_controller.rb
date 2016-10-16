@@ -9,6 +9,7 @@ class HomeController < ApplicationController
     set_stats_alltime
     set_stats_lastused
 
+    set_chat_user
     load_chat_all
   end
 
@@ -16,6 +17,10 @@ class HomeController < ApplicationController
 
   def load_chat_all
     @recent_chat = ChatMessage.order(created_at: :desc).limit(20)
+  end
+
+  def set_chat_user
+    @nickname ||= ChatMessage::CHAT_NAMES.sample
   end
 
   def set_stats_alltime

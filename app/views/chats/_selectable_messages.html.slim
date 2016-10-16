@@ -1,9 +1,15 @@
 .row
   .col-xs-12
-    h5.pull-left
-      | I'm Feeling:
+    .send-text-container.pull-left
+      h5.send-text-header.pull-left
+        | I'm Feeling:
 
-    - ['😁', '😂', '😨', '🙈'].each do |text|
-      span.emoji-message.pull-left = text
+      - ['😁', '😂', '😍', '😖', '😨', '🙈'].each do |text|
+        span.emoji-message.pull-left = text
 
+    .display-nickname.pull-right
+      | nickname:
+      b
+        span#nickname
+          = @nickname
     .divider

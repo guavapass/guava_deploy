@@ -11,5 +11,9 @@ App.chat_all = App.cable.subscriptions.create "ChatAllChannel",
 
 $ ->
   $('.emoji-message').click( ->
-    App.chat_all.perform('send_message', text: $(this).html())
+    App.chat_all.perform(
+      'send_message',
+      nickname: $('#nickname').html()
+      text: $(this).html()
+    )
   )
