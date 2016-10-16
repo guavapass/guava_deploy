@@ -12,7 +12,7 @@ javascript:
         dt Total Visits
         dd = visits.count
         dt Total Time
-        dd = duration_hms(total_time)
+        dd = distance_of_time_in_words(Time.at(0), Time.at(total_time))
         dt Average
         dd = duration_hms(total_time/visits.count)
         dt Shortest

@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929004244) do
+ActiveRecord::Schema.define(version: 20161016034655) do
+
+  create_table "chat_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+    t.integer  "account_id"
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "door_events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "action",     null: false
@@ -21,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160929004244) do
     t.index ["visit_id"], name: "index_door_events_on_visit_id", using: :btree
   end
 
-  create_table "visits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "visits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.datetime "start_at"
     t.datetime "end_at"
     t.datetime "created_at", null: false

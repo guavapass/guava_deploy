@@ -8,12 +8,18 @@ class HomeController < ApplicationController
 
     set_stats_alltime
     set_stats_lastused
+
+    load_chat_all
   end
 
   private
 
+  def load_chat_all
+    @recent_chat = ChatMessage.order(created_at: :desc).limit(20)
+  end
+
   def set_stats_alltime
-    visits = Visit.all.order(start_at: :asc)
+    visits = Visit.where.not(end_at: nil).order(start_at: :asc)
 
     visits_cleaned = visits_remove_unended(visits)
 
@@ -31,6 +37,8 @@ class HomeController < ApplicationController
 
     visits = Visit.where(
       start_at: @last_used_at.beginning_of_day .. @last_used_at.end_of_day
+    ).where.not(
+      end_at: nil
     ).order(start_at: :asc)
 
     @last_used_day_visits_by_hour = visits_by_hour(visits)

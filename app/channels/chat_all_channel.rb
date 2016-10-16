@@ -9,10 +9,17 @@ class ChatAllChannel < ApplicationCable::Channel
 
   end
 
-  def push_message(message)
-    ActionCable.server.broadcast(
-      "ChatAll",
-      text: message.text,
-    )
+  class << self
+    def push_message(message)
+      ActionCable.server.broadcast(
+        "ChatAll",
+        text: message.text,
+        html: ApplicationController.new.render_to_string(
+          partial: 'chats/message',
+          locals: { message: message }
+        )
+      )
+    end
   end
+
 end

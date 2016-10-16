@@ -26,6 +26,8 @@
         dl.dl-horizontal
           dt Currently Connected
           dd#num-connected ?
+  .col-sm-6
+    = render partial: 'chats/all', locals: { messages: @recent_chat }
 .row
   .col-sm-6
     = render partial: 'stats_alltime', locals: { visits: @alltime_visits, visits_by_hour: @alltime_visits_by_hour, total_time: @alltime_total_time }

@@ -7,3 +7,4 @@ App.chat_all = App.cable.subscriptions.create "ChatAllChannel",
 
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
+    $('#chat-all-messages').prepend(data.html)
