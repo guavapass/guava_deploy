@@ -8,8 +8,6 @@ class DoorEventChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    stop_all_streams
-
     CurrentState.push_state
   end
 end
