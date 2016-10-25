@@ -4,7 +4,7 @@ lock '3.6.1'
 set :application, 'guava_deploy'
 set :repo_url, 'git@github.com:guavapass/guava_deploy.git'
 
-set :branch, 'feature/meetup-complete'
+set :branch, 'feature/meetup'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
