@@ -9,7 +9,7 @@ App.chat_all = App.cable.subscriptions.create "ChatAllChannel",
     # Called when there's incoming data on the websocket for this channel
     $('#chat-all-messages').prepend(data.html)
 
-$ ->
+$(document).on 'turbolinks:load', ->
   $('.emoji-message').click( ->
     App.chat_all.perform(
       'send_message',
