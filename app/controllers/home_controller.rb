@@ -21,6 +21,11 @@ class HomeController < ApplicationController
 
   def set_chat_user
     @nickname ||= ChatMessage::CHAT_NAMES.sample
+
+    ActionCable.server.broadcast(
+      'who_connected',
+      html: "Welcome <b>#{@nickname}</b> who just connected.<br/>".html_safe,
+    )
   end
 
   def set_stats_alltime

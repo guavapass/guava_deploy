@@ -26,6 +26,12 @@
         dl.dl-horizontal
           dt Currently Connected
           dd#num-connected ?
+
+    .row
+      .col-sm-12
+        .well
+          #peopleConnected
+
   .col-sm-6
     = render partial: 'chats/selectable_messages'
     = render partial: 'chats/all', locals: { messages: @recent_chat }
