@@ -10,7 +10,7 @@ App.door_event = App.cable.subscriptions.create "DoorEventChannel",
     user_disconnected()
 
   received: (data) ->
-    $('title').html("[#{data.state}] Level 3 Bathroom")
+    $('title').html("[#{data.state}] We Love Ruby SG")
     $('#current-state').html(data.state)
     $('#current-state').removeClass('alert-success alert-danger')
     $('#current-state').addClass("alert-#{data.alertState}")
