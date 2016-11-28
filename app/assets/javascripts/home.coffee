@@ -5,6 +5,25 @@
 $(document).on "turbolinks:load", ->
   statsChart("#statsAllTime", labelsAllTime, dataAllTime)
   statsChart("#statsLastUsed", labelsLastUsed, dataLastUsed)
+  devAtmosphere()
+
+devAtmosphere = ->
+  urls = {
+    humidity: 'https://us.wio.seeed.io/v1/node/GroveTempHumD0/humidity?access_token=c6cd59b573d5c662f0a58b1294e30645',
+    temp: 'https://us.wio.seeed.io/v1/node/GroveTempHumD0/temperature?access_token=c6cd59b573d5c662f0a58b1294e30645'
+  }
+
+  $.get(
+    url: urls.temp
+    success: (data) ->
+      $('#dev-temp').html(data.celsius_degree)
+  )
+
+  $.get(
+    url: urls.humidity
+    success: (data) ->
+      $('#dev-humidity').html(data.humidity)
+  )
 
 statsChart = (chartId, labelSet, dataSet) ->
   ctx = $(chartId)

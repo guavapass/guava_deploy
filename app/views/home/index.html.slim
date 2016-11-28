@@ -34,3 +34,13 @@
     = render partial: 'stats_alltime', locals: { visits: @alltime_visits, visits_by_hour: @alltime_visits_by_hour, total_time: @alltime_total_time }
   .col-sm-6
     = render partial: 'stats_lastused', locals: { visits: @last_used_day_visits, visits_by_hour: @last_used_day_visits_by_hour, total_time: @last_used_day_total_time, date: @last_used_at }
+
+.row
+  .col-sm-3
+    .well
+      h1 Dev Room
+      dl.dl-horizontal
+        dt Temperature
+        dd#dev-temp ?
+        dt Humidity
+        dd#dev-humidity ?
